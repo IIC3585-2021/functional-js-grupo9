@@ -1,8 +1,19 @@
 const sumStr = (elem) => (elem === 'DB')? 50: 25;
 const whatToDo = (elem) => (typeof elem === 'string') ? sumStr(elem) : elem.reduce((x, y) => (x * y));
 
-const initGame = (names) => {
-    return names.map(name => Player(name));
+const jugadas = [['DB', [3,20], [3,19]], ['SB', [2,20], [3,20]], [[1, 18], [1, 10], [1, 12]]];
+const names = ['a', 'b']
+
+const initGame = (names, jugadas) => {
+    return names.map(name => play(inputJugada));
+}
+
+const ingresarJugada = (nombre, score, jugada) => {
+
+}
+
+const inputJugada = (nombre) => {
+    console.log("Ingrese lanzamientos de ", nombre);
 }
 
 const play = (array_person) => { 
@@ -12,10 +23,9 @@ const play = (array_person) => {
     console.log(score)
 }
 
-const playGame = () => {
-    var curr = currentPlayer;
-    currentPlayer = currentPlayer + 1 === players.length ? 0 : currentPlayer + 1;
+const playGame = (names, scores, jugadas, index) => {
+    const currentIndex = index + 1 === players.length ? 0 : index + 1;
     var jugada = plays.shift() // aca deberia ir el input de la jugada, esta hardcoded
-    players[curr].play(jugada) == 0?endGame():this.playGame();
+    players[curr].play(jugada) == 0 ? endGame() : playGame(names, scores, jugadas, currentIndex);
 }
 

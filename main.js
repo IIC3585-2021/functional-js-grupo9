@@ -5,7 +5,7 @@ const Player = (name) => {
     let score = 501;
     return {
       play (array) { 
-          var x = array.map(element => whatToDo(element));
+          let x = array.map(element => whatToDo(element));
           score -= x.reduce((x, y) => (x + y));
           score = Math.abs(score);
           console.log(name, score)
@@ -26,14 +26,14 @@ const initGame = (names) => {
 const game = (...names) => {
     let plays = [['DB', [3,20], [3,19]], ['SB', [2,20], [3,20]], [[1, 18], [1, 10], [1, 12]]];
     console.log(names)
-    var players = initGame(names);
-    var currentPlayer = 0;
+    let players = initGame(names);
+    let currentPlayer = 0;
     return {
         playGame() {
-            var curr = currentPlayer;
+            let curr = currentPlayer;
             currentPlayer = currentPlayer + 1 === players.length ? 0 : currentPlayer + 1;
-            var play = plays.shift();
-            var jugada = play === undefined?'return':play;
+            let play = plays.shift();
+            let jugada = play === undefined?'return':play;
             if (jugada === 'return') {
                 return
             }
