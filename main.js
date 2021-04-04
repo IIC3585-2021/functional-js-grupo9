@@ -32,7 +32,11 @@ const game = (...names) => {
         playGame() {
             var curr = currentPlayer;
             currentPlayer = currentPlayer + 1 === players.length ? 0 : currentPlayer + 1;
-            var jugada = plays.shift() // aca deberia ir el input de la jugada, esta hardcoded
+            var play = plays.shift();
+            var jugada = play === undefined?'return':play;
+            if (jugada === 'return') {
+                return
+            }
             players[curr].play(jugada) == 0?endGame():this.playGame();
         },
         endGame() {
