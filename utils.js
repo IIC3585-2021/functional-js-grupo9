@@ -1,3 +1,5 @@
+// CLI Input function
+
 const readline = require('readline');
 
 const askQuestion = function(query) {
@@ -11,7 +13,6 @@ const askQuestion = function(query) {
         resolve(ans);
     }))
 }
-
 
 
 module.exports = {askQuestion}
