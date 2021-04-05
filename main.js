@@ -1,59 +1,31 @@
-const sumStr = (elem) => (elem === 'DB')? 50: 25;
-const whatToDo = (elem) => (typeof elem === 'string') ? sumStr(elem) : elem.reduce((x, y) => (x * y));
+// Main file
 
-const Player = (name) => {
-    let score = 501;
-    return {
-      play (array) { 
-          let x = array.map(element => whatToDo(element));
-          score -= x.reduce((x, y) => (x + y));
-          score = Math.abs(score);
-          console.log(name, score)
-      },
-      getName(){
-          return name;
-      },
-      getScore(){
-          return score;
-      }
-    }
- }
+const {getPlayers, play, createScores, calcScores, logResults} = require("./game.js");
 
-const initGame = (names) => {
-    return names.map(name => Player(name));
+
+// Función recursiva que lleva el flujo del juego
+const playGame = async (players, scores, playersIndex) => {
+    const playersIndex2 = playersIndex + 1 === players.length ? 0 : playersIndex + 1;
+    const newScore = await play(scores[playersIndex], players[playersIndex]);
+    console.log(`${players[playersIndex]} queda con ${newScore}`)
+    const newScores = calcScores(scores)(newScore)(playersIndex);
+    (newScore == 0) ? endGame(players)(newScores) : await playGame(players, newScores, playersIndex2);
 }
 
-const game = (...names) => {
-    let plays = [['DB', [3,20], [3,19]], ['SB', [2,20], [3,20]], [[1, 18], [1, 10], [1, 12]]];
-    console.log(names)
-    let players = initGame(names);
-    let currentPlayer = 0;
-    return {
-        playGame() {
-            let curr = currentPlayer;
-            currentPlayer = currentPlayer + 1 === players.length ? 0 : currentPlayer + 1;
-            let play = plays.shift();
-            let jugada = play === undefined?'return':play;
-            if (jugada === 'return') {
-                return
-            }
-            players[curr].play(jugada) == 0?endGame():this.playGame();
-        },
-        endGame() {
-            console.log('terminado')
-        }
+
+// Función que finaliza el juego
+const endGame = (players) => {
+    return (scores) => {
+        const winner = players[scores.findIndex((elem) => elem === 0)];
+        console.log(`\n${winner} queda con 0 puntos y es el ganador! Felicidades`)
+        logResults(players)(scores)
     }
 }
 
-// const p1 = Player('p1')
-// p1.play(['SB', [2,20], [3,20]])
-// console.log(p1.getName())
-// console.log(p1.getScore())
 
-const g = game('a','b')
-g.playGame()
-// const noFinish = (players) => (players.some((player) => player.getScore() === 0))?'juego termiando': noFinish; 
-
-// const didWin = (player) => player.getScore() === 0 ? true : false
-// const didFinish = (players) => players.reduce(player => didWin(player) && true );
-// const play = (game, movements) => didFinish(game.getPlayers()) ? true : game.getPlayers().map(player => player.play)
+// Ejecución del juego
+(async () => {
+    const players = await getPlayers()
+    const scores = createScores(players)
+    await playGame(players, scores, 0);
+})()
