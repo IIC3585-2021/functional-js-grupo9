@@ -3,6 +3,7 @@
 const {getPlayers, play, createScores, calcScores, logResults} = require("./game.js");
 
 
+// Función recursiva que lleva el flujo del juego
 const playGame = async (players, scores, playersIndex) => {
     const playersIndex2 = playersIndex + 1 === players.length ? 0 : playersIndex + 1;
     const newScore = await play(scores[playersIndex], players[playersIndex]);
@@ -12,6 +13,7 @@ const playGame = async (players, scores, playersIndex) => {
 }
 
 
+// Función que finaliza el juego
 const endGame = (players) => {
     return (scores) => {
         const winner = players[scores.findIndex((elem) => elem === 0)];
@@ -21,6 +23,7 @@ const endGame = (players) => {
 }
 
 
+// Ejecución del juego
 (async () => {
     const players = await getPlayers()
     const scores = createScores(players)
