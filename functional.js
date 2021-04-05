@@ -1,20 +1,5 @@
-// const plays = [['DB', [3,20], [3,19]], ['SB', [2,20], [3,20]], [[1, 18], [1, 10], [1, 12]], [[1,76], [1,150], [1,150]]]; //ganador b
-// const plays = [['DB', [3,20], [3,19]], ['SB', [2,20], [3,20]], [[1, 18], [1, 10], [1, 12]]];
-// const players = ['a', 'b']
+const {askQuestion} = require("./utils.js");
 
-const readline = require('readline');
-
-function askQuestion(query) {
-    const rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout,
-    });
-
-    return new Promise(resolve => rl.question(query, ans => {
-        rl.close();
-        resolve(ans);
-    }))
-}
 
 const createScores = (players) => new Array(players.length).fill(501) 
 
@@ -26,10 +11,9 @@ const whatToDo = (elem) => (typeof elem === 'string') ? sumStr(elem) : elem.redu
 const play = async (score, player) => {
     console.log("Ingrese jugada de ", player) 
     let jugadas = await askQuestion("-->: ");
-    console.log(jugadas)
     jugadas = JSON.parse(jugadas)
-    const x = jugadas.map(element => whatToDo(element)).reduce((x, y) => (x + y));
-    return Math.abs(score - x)
+    const points = jugadas.map(element => whatToDo(element)).reduce((x, y) => (x + y));
+    return Math.abs(score - points)
 }
 
 const new_scores = (i_player, scores, score_2) => {
