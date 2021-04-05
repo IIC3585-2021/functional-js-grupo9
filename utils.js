@@ -12,4 +12,9 @@ const askQuestion = function(query) {
     }))
 }
 
-module.exports = {askQuestion}
+const getPlayers = async () => {
+    const players = await askQuestion("Ingrese nombres de jugadores separados por comas: ")
+    return players.split(",")
+}
+
+module.exports = {askQuestion, getPlayers}
