@@ -10,7 +10,7 @@ node main.js
     Ejemplo: Juan,Ema
     
 * Jugadas en una lista.
-    Ejemplo: ['DB', [3,20], [3,19]]
+    Ejemplo: ["DB", [3,20], [3,19]]
   
 
 ## Integrantes:
